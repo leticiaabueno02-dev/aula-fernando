@@ -1,14 +1,14 @@
-const produtoModel = require('../models/produtosModel');
+const produtoModel = require('../models/produtoModel');
 
 const produtoController = {
-    criarProduto: (resq,res) => {
-        const {codigo,nome,qtde,preco} = req.body;
+    criarProduto: (req,res) => {
+        const { codigo,nome,qtde,preco} = req.body;
         // validação simples dos campos obrigatórios
         if(!codigo || !nome || !quantidade || !preco){
             return res.status(400).json({
                 sucesso:false,
                 mensagem:"Todos os campos(código, nome, quantidade, preco) são obrigatórios"
-            })
+            });
         }
 
          // transformar a calcular os dados
@@ -24,7 +24,7 @@ const produtoController = {
         preco: valorPreco,
         total: valorTotal,
         criadoEm: new Date().toISOString()
-    }
+    };
 // chama o model para persistir no arquivo json
     const produtoSalvo = produtoModel.salvar(novoProduto);
 
@@ -33,6 +33,20 @@ const produtoController = {
         sucesso:true, 
         mensagem: "Produto cadastrado com sucesso!",
         produto: produtoSalvo
-    })
-    }
-}
+    });
+    },
+
+        listarProduto:(req,res) => {
+        const produtos = produtoModel.buscarTodos();
+        return res.json({
+            sucesso: true,
+            total: produtos.length,
+            produtos
+        });
+        }
+    };
+
+
+
+
+module.exports = produtoController;

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express= require('express');
-const routes = require('./routes') // importa automaticamente o routes /index.js
+const routes = require('./routes'); // importa automaticamente o routes /index.js
 const app = express();
 
 app.use(express.json());
