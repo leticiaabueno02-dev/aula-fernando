@@ -7,5 +7,6 @@ const produtoController = require('../controllers/produtoController') // faz a r
 router.post('/novo', produtoController.criarProduto) // post sempre cria 
 // models, modelo de armazenamento --- representação das tabelas
 // controller controla as regras de armazenamento
+router.get('/', produtoController.listarProduto);
 
 module.exports = router; 

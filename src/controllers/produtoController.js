@@ -4,7 +4,7 @@ const produtoController = {
     criarProduto: (req,res) => {
         const { codigo,nome,qtde,preco} = req.body;
         // validação simples dos campos obrigatórios
-        if(!codigo || !nome || !quantidade || !preco){
+        if(!codigo || !nome || !qtde || !preco){
             return res.status(400).json({
                 sucesso:false,
                 mensagem:"Todos os campos(código, nome, quantidade, preco) são obrigatórios"
@@ -15,12 +15,12 @@ const produtoController = {
          const nomeMaiusculo = String(nome).toUpperCase();
          const quantidade = Number(qtde);
          const valorPreco = Number(preco);
-         const valorTotal = quantidade * valorPreco;
+         const valorTotal = qtde * valorPreco;
 
     const novoProduto= {
         codigo,
         nome:nomeMaiusculo ,
-        quantidade: quantidade,
+        qtde: quantidade,
         preco: valorPreco,
         total: valorTotal,
         criadoEm: new Date().toISOString()
