@@ -1,10 +1,10 @@
 const produtoModel = require('../models/produtoModel');
 
 const produtoController = {
-    criarProduto: (req,res) => {
+    criarProduto: async (req,res) => {
         const { codigo,nome,qtde,preco} = req.body;
         // validação simples dos campos obrigatórios
-        if(!codigo || !nome || !qtde || !preco){
+        if(!codigo || !nome || !quantidade || !preco){
             return res.status(400).json({
                 sucesso:false,
                 mensagem:"Todos os campos(código, nome, quantidade, preco) são obrigatórios"
@@ -17,16 +17,15 @@ const produtoController = {
          const valorPreco = Number(preco);
          const valorTotal = qtde * valorPreco;
 
-    const novoProduto= {
+    const novoProduto= await produtoModel.create({
+        data: {
         codigo,
         nome:nomeMaiusculo ,
-        qtde: quantidade,
+        quantidade: quantidade,
         preco: valorPreco,
         total: valorTotal,
-        criadoEm: new Date().toISOString()
-    };
-// chama o model para persistir no arquivo json
-    const produtoSalvo = produtoModel.salvar(novoProduto);
+        }
+    });
 
     // retorna a resposta http 201 (created)
     return res.status(201).json({
@@ -36,13 +35,19 @@ const produtoController = {
     });
     },
 
-        listarProduto:(req,res) => {
-        const produtos = produtoModel.buscarTodos();
-        return res.json({
-            sucesso: true,
-            total: produtos.length,
-            produtos
-        });
+        listarProduto: async (req,res) => {
+        try {
+
+            const produtos = produtoModel.buscarTodos();
+            return res.json({
+                sucesso: true,
+                total: produtos.length,
+                produtos
+            });
+        } catch (error) {
+            return res.status(500).json({sucesso: false,erro: error.message})
+        }
+        
         }
     };
 

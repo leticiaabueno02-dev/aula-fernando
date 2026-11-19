@@ -12,3 +12,15 @@ generator client {
 datasource db {
   provider = "mysql"
 }
+model Produto {
+  id           Int      @id @default(autoincrement())
+  codigo       Int      @unique
+  nome         String
+  quantidade   Int
+  preco        Decimal  @db.Decimal(10, 2)
+  total        Decimal  @db.Decimal(10, 2)
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@map("produtos")
+}
