@@ -4,7 +4,8 @@ const produtoController = require('../controllers/produtoController') // faz a r
 
 // ROTA POST 
 // /podutos/novo
-router.post('/novo', produtoController.criarProduto) // post sempre cria 
+router.post('/novo', produtoController.criarProduto)
+router.get('/listar', produtoController.listarProduto) // post sempre cria 
 // models, modelo de armazenamento --- representação das tabelas
 // controller controla as regras de armazenamento
 router.get('/', produtoController.listarProduto);
